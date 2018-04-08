@@ -1,8 +1,10 @@
-class Grass {
-    constructor(x, y) {
+class LivingCreature {
+    constructor(x, y, index) {
         this.x = x;
         this.y = y;
-        this.multiply = Math.round(Math.random() * 7);
+        this.energy = 7;
+        this.multiply = 0;
+        this.index = index;
         this.directions = [
             [this.x - 1, this.y - 1],
             [this.x, this.y - 1],
@@ -15,14 +17,12 @@ class Grass {
         ];
 
     }
-
     yntrelVandak(ch) {
         var found = [];
         for (var i in this.directions) {
             var x = this.directions[i][0];
             var y = this.directions[i][1];
             if (x >= 0 && x < matrix[0].length && y >= 0 && y < matrix.length) {
-
                 if (matrix[y][x] == ch) {
                     found.push(this.directions[i]);
                 }
@@ -30,6 +30,18 @@ class Grass {
         }
         return found;
     }
+}
+
+
+
+
+class Grass extends LivingCreature {
+    constructor(x, y, index) {
+        super(x, y, index);
+        this.multiply = Math.round(Math.random() * 7);
+
+    }
+
     bazmanal() {
 
         this.multiply++;
@@ -45,22 +57,8 @@ class Grass {
 
 }
 //--------------------------------------------------------------
-class Xotaker {
-    constructor(x, y) {
-        this.x = x;
-        this.y = y;
-        this.energy = 6;
-        this.directions = [
-            [this.x - 1, this.y - 1],
-            [this.x, this.y - 1],
-            [this.x + 1, this.y - 1],
-            [this.x - 1, this.y],
-            [this.x + 1, this.y],
-            [this.x - 1, this.y + 1],
-            [this.x, this.y + 1],
-            [this.x + 1, this.y + 1]
-        ];
-    }
+class Xotaker extends LivingCreature {
+
     stanalNorKordinatner() {
         this.directions = [
             [this.x - 1, this.y - 1],
@@ -75,19 +73,7 @@ class Xotaker {
     }
     yntrelVandak(ch) {
         this.stanalNorKordinatner();
-
-        var fond = [];
-        for (var i in this.directions) {
-            var x = this.directions[i][0];
-            var y = this.directions[i][1];
-            if (x >= 0 && x < matrix[0].length && y >= 0 && y < matrix.length) {
-
-                if (matrix[y][x] == ch) {
-                    fond.push(this.directions[i]);
-                }
-            }
-        }
-        return fond;
+        return super.yntrelVandak(ch);
     }
     sharjvel() {
 
@@ -117,6 +103,7 @@ class Xotaker {
                 if (this.x == grassArr[i].x && this.y == grassArr[i].y) {
                     grassArr.splice(i, 1);
                     this.energy += 1;
+                    break;
                 }
 
             }
@@ -136,9 +123,10 @@ class Xotaker {
     }
     mernel() {
         for (var i in xotakerArr)
-            if (this.x == xotakerArr[i].x && this.y == xotakerArr[i].y && this.energy < 0) {
+            if (this.x == xotakerArr[i].x && this.y == xotakerArr[i].y && this.energy < 1) {
                 xotakerArr.splice(i, 1);
                 matrix[this.y][this.x] = 0;
+
             }
 
     }
@@ -147,22 +135,8 @@ class Xotaker {
 
 //-----------------------------------------------------------------------------------
 
-class Gayl {
-    constructor(x, y) {
-        this.x = x;
-        this.y = y;
-        this.energy = 6;
-        this.directions = [
-            [this.x - 1, this.y - 1],
-            [this.x, this.y - 1],
-            [this.x + 1, this.y - 1],
-            [this.x - 1, this.y],
-            [this.x + 1, this.y],
-            [this.x - 1, this.y + 1],
-            [this.x, this.y + 1],
-            [this.x + 1, this.y + 1]
-        ];
-    }
+class Gayl extends LivingCreature {
+
     stanalNorKordinatner() {
         this.directions = [
             [this.x - 1, this.y - 1],
@@ -177,20 +151,9 @@ class Gayl {
     }
     yntrelVandak(ch) {
         this.stanalNorKordinatner();
-
-        var found = [];
-        for (var i in this.directions) {
-            var x = this.directions[i][0];
-            var y = this.directions[i][1];
-            if (x >= 0 && x < matrix[0].length && y >= 0 && y < matrix.length) {
-
-                if (matrix[y][x] == ch) {
-                    found.push(this.directions[i]);
-                }
-            }
-        }
-        return found;
+        return super.yntrelVandak(ch);
     }
+
     sharjvel() {
 
         this.stanalNorKordinatner();
@@ -219,6 +182,7 @@ class Gayl {
                 if (this.x == xotakerArr[i].x && this.y == xotakerArr[i].y) {
                     xotakerArr.splice(i, 1);
                     this.energy += 2;
+                    break;
                 }
 
             }
@@ -241,6 +205,7 @@ class Gayl {
             if (this.x == Gaylarr[i].x && this.y == Gaylarr[i].y && this.energy < 0) {
                 Gaylarr.splice(i, 1);
                 matrix[this.y][this.x] = 0;
+
             }
 
     }
@@ -250,11 +215,10 @@ class Gayl {
 
 //-----------------------------------------------------------------------------------
 
-class Mard {
-    constructor(x, y) {
-        this.x = x;
-        this.y = y;
-        this.energy = 5;
+class Mard extends LivingCreature {
+    constructor(x, y, index) {
+        super(x, y, index);
+        this.energy = 8;
         this.directions = [
             [this.x - 1, this.y - 1],
             [this.x, this.y - 1],
@@ -313,22 +277,9 @@ class Mard {
     }
     yntrelVandak(ch) {
         this.stanalNorKordinatner();
-
-        var found = [];
-        console.log(this.directions);
-        for (var i in this.directions) {
-            console.log(this.directions[i])
-            var x = this.directions[i][0];
-            var y = this.directions[i][1];
-            if (x >= 0 && x < matrix[0].length && y >= 0 && y < matrix.length) {
-
-                if (matrix[y][x] == ch) {
-                    found.push(this.directions[i]);
-                }
-            }
-        }
-        return found;
+        return super.yntrelVandak(ch);
     }
+
     sharjvel() {
 
         this.stanalNorKordinatner();
@@ -358,6 +309,7 @@ class Mard {
                 if (this.x == xotakerArr[i].x && this.y == xotakerArr[i].y) {
                     xotakerArr.splice(i, 1);
                     this.energy += 1;
+                    break;
                 }
 
             }
@@ -371,6 +323,7 @@ class Mard {
                 if (this.x == Gaylarr[i].x && this.y == Gaylarr[i].y) {
                     Gaylarr.splice(i, 1);
                     this.energy += 1;
+
                 }
 
             }
@@ -393,6 +346,7 @@ class Mard {
             if (this.x == MardArr[i].x && this.y == MardArr[i].y && this.energy < 0) {
                 MardArr.splice(i, 1);
                 matrix[this.y][this.x] = 0;
+
             }
 
     }
@@ -401,21 +355,11 @@ class Mard {
 
 //-----------------------------------------------------------------------------------------------
 
-class zombi {
-    constructor(x, y) {
-        this.x = x;
-        this.y = y;
+class zombi extends LivingCreature {
+    constructor(x, y, index) {
+        super(x, y, index);
         this.energy = 50;
-        this.directions = [
-            [this.x - 1, this.y - 1],
-            [this.x, this.y - 1],
-            [this.x + 1, this.y - 1],
-            [this.x - 1, this.y],
-            [this.x + 1, this.y],
-            [this.x - 1, this.y + 1],
-            [this.x, this.y + 1],
-            [this.x + 1, this.y + 1]
-        ];
+
     }
     stanalNorKordinatner() {
         this.directions = [
@@ -431,18 +375,7 @@ class zombi {
     }
     yntrelVandak(ch) {
         this.stanalNorKordinatner();
-
-        var found = [];
-        for (var i in this.directions) {
-            var x = this.directions[i][0];
-            var y = this.directions[i][1];
-            if (x >= 0 && x < matrix[0].length && y >= 0 && y < matrix.length) {
-                if (matrix[y][x] == ch) {
-                    found.push(this.directions[i]);
-                }
-            }
-        }
-        return found;
+        return super.yntrelVandak(ch);
     }
     sharjvel() {
 
@@ -472,6 +405,7 @@ class zombi {
                 if (this.x == MardArr[i].x && this.y == MardArr[i].y) {
                     MardArr.splice(i, 1);
                     this.energy += 1;
+                    break;
                 }
 
             }
@@ -561,7 +495,7 @@ class zombi {
 //     constructor(x, y) {
 //         this.x = x;
 //         this.y = y;
-        
+
 //         this.directions = [
 //             [this.x - 1, this.y - 1],
 //             [this.x, this.y - 1],
@@ -624,7 +558,7 @@ class zombi {
 //         var found = [];
 //         console.log(this.directions);
 //         for (var i in this.directions) {
-            
+
 //             var x = this.directions[i][0];
 //             var y = this.directions[i][1];
 //             if (x >= 0 && x < matrix[0].length && y >= 0 && y < matrix.length) {
@@ -656,7 +590,7 @@ class zombi {
 //         var nortex1 = random(this.yntrelVandak(2));
 //         var nortex2 = random(this.yntrelVandak(3));
 //         var nortex4 = random(this.yntrelVandak(4));
-        
+
 
 //           if (nortex) {
 //             matrix[this.y][this.x] = 0;
@@ -666,7 +600,7 @@ class zombi {
 //             for (var i in grassArr) {
 //                 if (this.x == grassArr[i].x && this.y == grassArr[i].y) {
 //                     grassArr.splice(i, 1);
-                    
+
 //                 }
 
 //             }
@@ -679,7 +613,7 @@ class zombi {
 //             for (var i in xotakerArr) {
 //                 if (this.x == xotakerArr[i].x && this.y == xotakerArr[i].y) {
 //                     xotakerArr.splice(i, 1);
-                    
+
 //                 }
 
 //             }
@@ -692,7 +626,7 @@ class zombi {
 //             for (var i in Gaylarr) {
 //                 if (this.x == Gaylarr[i].x && this.y == Gaylarr[i].y) {
 //                     Gaylarr.splice(i, 1);
-                    
+
 //                 }
 
 //             }
@@ -705,7 +639,7 @@ class zombi {
 //             for (var i in MardArr) {
 //                 if (this.x == MardArr[i].x && this.y == MardArr[i].y) {
 //                     MardArr.splice(i, 1);
-                    
+
 //                 }
 
 //             }

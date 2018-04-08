@@ -2,7 +2,7 @@ var n = 40;
 var m = 40;
 
 var matrix = [];
- 
+
 
 
 
@@ -80,7 +80,6 @@ var matrix = [];
 // ];
 
 var side = 10;
-
 var grassArr = [];
 var xotakerArr = [];
 var Gaylarr = [];
@@ -89,44 +88,44 @@ var zombarr = [];
 
 function setup() {
     for (var i = 0; i < n; i++) {
-    matrix[i]=[];
+        matrix[i] = [];
 
-    for(var j =0;j< m;j++){
-        matrix[i][j] = Math.round(Math.random()*1);
+        for (var j = 0; j < m; j++) {
+            matrix[i][j] = Math.round(Math.random() * 1);
+        }
     }
-}
-matrix.push( [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 2, 2, 2, 4, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,]);
-matrix.push( [2, 4, 3, 2, 2, 5, 5, 5,1, 4, 5, 1, 4, 2, 1, 1,1, 2, 1, 1, 2, 2, 1, 1,1, 3, 2, 5, 4, 2, 1, 1,1, 2, 2, 5, 3, 2, 2, 3])
-matrix.push( [4, 4, 2, 2, 2, 2, 1, 2,1, 2, 2, 1, 2, 2, 1, 1,3, 2, 2, 5, 4, 2, 4, 5,1, 2, 4, 1, 2, 2, 1, 4,1, 2, 3, 1, 2, 4, 2, 2])
-matrix.push( [3, 4, 1, 2, 3, 1, 1, 3,3, 3, 3, 1, 2, 3, 1, 1,2, 2, 2, 1, 2, 2, 1, 1,4, 2, 2, 4, 4, 2, 1, 3,1, 2, 2, 1, 2, 2, 2, 2])
+    matrix.push([2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 2, 2, 2, 4, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,]);
+    matrix.push([2, 4, 3, 2, 2, 5, 5, 5, 1, 4, 5, 1, 4, 2, 1, 1, 1, 2, 1, 1, 2, 2, 1, 1, 1, 3, 2, 5, 4, 2, 1, 1, 1, 2, 2, 5, 3, 2, 2, 3])
+    matrix.push([4, 4, 2, 2, 2, 2, 1, 2, 1, 2, 2, 1, 2, 2, 1, 1, 3, 2, 2, 5, 4, 2, 4, 5, 1, 2, 4, 1, 2, 2, 1, 4, 1, 2, 3, 1, 2, 4, 2, 2])
+    matrix.push([3, 4, 1, 2, 3, 1, 1, 4, 3, 3, 3, 1, 2, 3, 4, 1, 2, 2, 2, 1, 2, 2, 1, 1, 4, 2, 2, 4, 4, 2, 1, 3, 1, 2, 2, 1, 2, 2, 2, 2])
 
     frameRate(7);
     createCanvas(matrix[0].length * side, matrix.length * side);
     background('#acacac');
 
     var xot = new Grass(2, 1);
-    var xotutox = new Xotaker(4,6);
+    var xotutox = new Xotaker(4, 6);
     var datarkVandakner = xot.yntrelVandak(0);
 
     for (var y = 0; y < matrix.length; y++) {
         for (var x = 0; x < matrix[y].length; x++) {
 
             if (matrix[y][x] == 1) {
-                grassArr.push(new Grass(x, y)) ;
+                grassArr.push(new Grass(x, y));
             }
-            else if (matrix[y][x] == 2){
-                xotakerArr.push(new Xotaker(x,y));
+            else if (matrix[y][x] == 2) {
+                xotakerArr.push(new Xotaker(x, y));
             }
-            else if (matrix[y][x] == 3){
-                Gaylarr.push(new Gayl(x,y));
+            else if (matrix[y][x] == 3) {
+                Gaylarr.push(new Gayl(x, y));
             }
-            else if (matrix[y][x] == 4){
-                MardArr.push(new Mard(x,y));
+            else if (matrix[y][x] == 4) {
+                MardArr.push(new Mard(x, y));
             }
-            else if (matrix[y][x] == 5){
-                zombarr.push(new zombi(x,y));
+            else if (matrix[y][x] == 5) {
+                zombarr.push(new zombi(x, y));
             }
-           
+
         }
     }
 
@@ -163,34 +162,34 @@ function draw() {
             }
         }
     }
-      for(var i in grassArr){
-     grassArr[i].bazmanal();
-     
-  }
-  for(var i in xotakerArr){
-     xotakerArr[i].sharjvel();
-     xotakerArr[i].utel();
-     xotakerArr[i].bazmanal();
-     xotakerArr[i].mernel();
-     
-  }
-  for(var i in Gaylarr){
-    Gaylarr[i].sharjvel();
-    Gaylarr[i].utel();
-    Gaylarr[i].bazmanal();
-    Gaylarr[i].mernel();
-    
- }
- for(var i in MardArr){
-    MardArr[i].sharjvel();
-    MardArr[i].xpel();
-    MardArr[i].bazmanal();
-    MardArr[i].mernel();
- }
- for(var i in zombarr){
-    zombarr[i].sharjvel();
-    zombarr[i].utel();
- }
+    for (var i in grassArr) {
+        grassArr[i].bazmanal();
+
+    }
+    for (var i in xotakerArr) {
+        xotakerArr[i].sharjvel();
+        xotakerArr[i].utel();
+        xotakerArr[i].bazmanal();
+        xotakerArr[i].mernel();
+
+    }
+    for (var i in Gaylarr) {
+        Gaylarr[i].sharjvel();
+        Gaylarr[i].utel();
+        Gaylarr[i].bazmanal();
+        Gaylarr[i].mernel();
+
+    }
+    for (var i in MardArr) {
+        MardArr[i].sharjvel();
+        MardArr[i].xpel();
+        MardArr[i].bazmanal();
+        MardArr[i].mernel();
+    }
+    for (var i in zombarr) {
+        zombarr[i].sharjvel();
+        zombarr[i].utel();
+    }
 
 }
 
