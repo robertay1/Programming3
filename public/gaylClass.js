@@ -42,7 +42,7 @@ class Gayl extends LivingCreature {
             this.y = nortex[1];
             matrix[this.y][this.x] = 3;
             for (var i in xotakerArr) {
-                if (this.x == xotakerArr[i].x && this.y == xotakerArr[i].y) {
+                if (nortex[0] == xotakerArr[i].x && nortex[1] == xotakerArr[i].y) {
                     xotakerArr.splice(i, 1);
                     this.energy += 2;
                     break;
@@ -55,7 +55,7 @@ class Gayl extends LivingCreature {
     bazmanal() {
         var norVandak = random(this.yntrelVandak(0));
 
-        if (this.energy >= 8 && norVandak) {
+        if (this.energy >= 6 && norVandak) {
             var norgayl = new Gayl(norVandak[0], norVandak[1]);
             Gaylarr.push(norgayl);
             matrix[norVandak[1]][norVandak[0]] = 3;

@@ -68,6 +68,7 @@ class Mard extends LivingCreature {
 
         this.stanalNorKordinatner();
         var nortex = random(this.yntrelVandak(0));
+       
 
         if (nortex) {
             matrix[this.y][this.x] = 0;
@@ -81,23 +82,11 @@ class Mard extends LivingCreature {
     xpel() {
         this.stanalNorKordinatner();
 
-        var nortex = random(this.yntrelVandak(2));
+        
         var nortex2 = random(this.yntrelVandak(3));
 
-        if (nortex) {
-            matrix[this.y][this.x] = 0;
-            this.x = nortex[0];
-            this.y = nortex[1];
-            matrix[this.y][this.x] = 4;
-            for (var i in xotakerArr) {
-                if (this.x == xotakerArr[i].x && this.y == xotakerArr[i].y) {
-                    xotakerArr.splice(i, 1);
-                    this.energy += 1;
-                    break;
-                }
-
-            }
-        }
+     
+        
         if (nortex2) {
             matrix[this.y][this.x] = 0;
             this.x = nortex2[0];
