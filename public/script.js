@@ -1,5 +1,5 @@
-var n = 40;
-var m = 40;
+var n = 35;
+var m = 35;
 
 var matrix = [];
 
