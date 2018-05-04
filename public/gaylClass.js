@@ -1,4 +1,5 @@
-class Gayl extends LivingCreature {
+var LivingCreature = require("./class.js")
+module.exports = class Gayl extends LivingCreature {
 
     stanalNorKordinatner() {
         this.directions = [

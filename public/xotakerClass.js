@@ -1,4 +1,5 @@
-class Xotaker extends LivingCreature {
+var LivingCreature = require("./class.js")
+module.exports = class Xotaker extends LivingCreature {
 
     stanalNorKordinatner() {
         this.directions = [
@@ -38,7 +39,7 @@ class Xotaker extends LivingCreature {
             for (var i in grassArr) {
                 if (nortex[0] == grassArr[i].x && nortex[1] == grassArr[i].y) {
                     grassArr.splice(i, 1);
-                    this.energy += 1;
+                    this.energy += 2;
                     break;
                 }
 
