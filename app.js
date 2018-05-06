@@ -1,11 +1,13 @@
 var express = require("express");
 var app = express();
-var zombi = require("./public/zombiClass.js")
-var Grass = require("./public/xotClass.js")
-var Xotaker = require("./public/xotakerClass.js")
-var Mard = require("./public/mardClass.js")
-var Gayl = require("./public/gaylClass.js")
-var LivingCreature = require("./public/class.js")
+var server = require('http').Server(app); 
+var io = require('socket.io')(server);
+var zombi = require("./public/zombiClass.js");
+var Grass = require("./public/xotClass.js");
+var Xotaker = require("./public/xotakerClass.js");
+var Mard = require("./public/mardClass.js");
+var Gayl = require("./public/gaylClass.js");
+var LivingCreature = require("./public/class.js");
 app.use(express.static("public"));
 
 app.get("/", function(req, res){
@@ -50,13 +52,19 @@ function setup() {
                 grassArr.push(new Grass(x, y));
             }
             else if (matrix[y][x] == 2) {
-                xotakerArr.push(new Xotaker(x, y));
+                var r = (Math.round(Math.random()))/2;
+                xotakerArr.push(new Xotaker(x, y, r));
+                matrix[y][x] += r;
             }
             else if (matrix[y][x] == 3) {
+                var r = (Math.round(Math.random()))/2;
                 Gaylarr.push(new Gayl(x, y));
+                matrix[y][x] += r;
             }
             else if (matrix[y][x] == 4) {
+                var r = (Math.round(Math.random()))/2;
                 MardArr.push(new Mard(x, y));
+                matrix[y][x] += r;
             }
             else if (matrix[y][x] == 5) {
                 zombarr.push(new zombi(x, y));

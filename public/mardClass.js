@@ -1,8 +1,9 @@
 var LivingCreature = require("./class.js")
 module.exports = class Mard extends LivingCreature {
-    constructor(x, y, index) {
-        super(x, y, index);
+    constructor(x, y, ser) {
+        super(x, y, ser);
         this.energy = 8;
+        this.ser = (ser == 0 ? "arakan" : "igakan");
         this.directions = [
             [this.x - 1, this.y - 1],
             [this.x, this.y - 1],
@@ -104,16 +105,32 @@ module.exports = class Mard extends LivingCreature {
     }
 
     bazmanal() {
-        var norVandak = random(this.yntrelVandak(0));
+        if (this.ser == "arakan"){
+        var norVandak = random(this.yntrelVandak(4.5));
 
         if (this.energy >= 10 && norVandak) {
-            var NorMard = new Mard(norVandak[0], norVandak[1]);
+            var Vandak = random(this.yntrelVandak(0));
+            var NorMard = new Mard(Vandak[0], Vandak[1]);
             MardArr.push(NorMard);
-            matrix[norVandak[1]][norVandak[0]] = 0;
+            matrix[Vandak[1]][Vandak[0]] = 0;
             this.energy -= 4;
         }
 
     }
+     if (this.ser == "igakan"){
+        var norVandak = random(this.yntrelVandak(4));
+
+        if (this.energy >= 10 && norVandak) {
+            var Vandak = random(this.yntrelVandak(0));
+            var NorMard = new Mard(Vandak[0], Vandak[1]);
+            MardArr.push(NorMard);
+            matrix[Vandak[1]][Vandak[0]] = 0;
+            this.energy -= 4;
+        }
+
+    }
+
+}
     mernel() {
         for (var i in MardArr)
             if (this.x == MardArr[i].x && this.y == MardArr[i].y && this.energy < 0) {

@@ -1,6 +1,11 @@
 var LivingCreature = require("./class.js")
 module.exports = class Gayl extends LivingCreature {
+     constructor(x, y, ser) {
+        super(x, y, ser);
+        this.ser = (ser == 0 ? "arakan" : "igakan");
 
+
+    }
     stanalNorKordinatner() {
         this.directions = [
             [this.x - 1, this.y - 1],
@@ -54,16 +59,34 @@ module.exports = class Gayl extends LivingCreature {
     }
 
     bazmanal() {
-        var norVandak = random(this.yntrelVandak(0));
+       if (this.ser == "arakan"){
+        var norVandak = random(this.yntrelVandak(3.5));
+     
 
         if (this.energy >= 6 && norVandak) {
-            var norgayl = new Gayl(norVandak[0], norVandak[1]);
+            var Vandak = random(this.yntrelVandak(0));
+            var norgayl = new Gayl(Vandak[0], Vandak[1]);
             Gaylarr.push(norgayl);
-            matrix[norVandak[1]][norVandak[0]] = 3;
+            matrix[Vandak[1]][Vandak[0]] = 3;
             this.energy -= 3;
         }
 
     }
+           if (this.ser == "igakan"){
+        var norVandak = random(this.yntrelVandak(3));
+     
+
+        if (this.energy >= 6 && norVandak) {
+            var Vandak = random(this.yntrelVandak(0));
+            var norgayl = new Gayl(Vandak[0], Vandak[1]);
+            Gaylarr.push(norgayl);
+            matrix[Vandak[1]][Vandak[0]] = 3;
+            this.energy -= 3;
+        }
+
+    }
+
+}
     mernel() {
         for (var i in Gaylarr)
             if (this.x == Gaylarr[i].x && this.y == Gaylarr[i].y && this.energy < 0) {
