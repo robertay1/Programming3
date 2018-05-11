@@ -1,6 +1,6 @@
 var express = require("express");
 var app = express();
-var server = require('http').Server(app); 
+var server = require('http').Server(app);
 var io = require('socket.io')(server);
 var zombi = require("./public/zombiClass.js");
 var Grass = require("./public/xotClass.js");
@@ -10,12 +10,12 @@ var Gayl = require("./public/gaylClass.js");
 var LivingCreature = require("./public/class.js");
 app.use(express.static("public"));
 
-app.get("/", function(req, res){
-   res.redirect("public");
+app.get("/", function (req, res) {
+    res.redirect("public");
 });
 
-app.listen(3000, function(){
-   console.log("Example is running on port 3000");
+app.listen(3000, function () {
+    console.log("Example is running on port 3000");
 });
 
 var n = 40;
@@ -52,17 +52,17 @@ function setup() {
                 grassArr.push(new Grass(x, y));
             }
             else if (matrix[y][x] == 2) {
-                var r = (Math.round(Math.random()))/2;
+                var r = (Math.round(Math.random())) / 2;
                 xotakerArr.push(new Xotaker(x, y, r));
                 matrix[y][x] += r;
             }
             else if (matrix[y][x] == 3) {
-                var r = (Math.round(Math.random()))/2;
+                var r = (Math.round(Math.random())) / 2;
                 Gaylarr.push(new Gayl(x, y));
                 matrix[y][x] += r;
             }
             else if (matrix[y][x] == 4) {
-                var r = (Math.round(Math.random()))/2;
+                var r = (Math.round(Math.random())) / 2;
                 MardArr.push(new Mard(x, y));
                 matrix[y][x] += r;
             }
@@ -74,38 +74,20 @@ function setup() {
     }
 
 }
+io.on('connection', function (socket) {
+    socket.emit("setup", { size: matrix.length, side: global.side })
+    for (var i in matrix) {
+        io.sockets.emit("draw", matrix[i]);
+    }
+    socket.on("send message", function (data) {
+        matrix.push(data);
+        io.sockets.emit("display message", data);
+    })
+});
+
 
 function draw() {
 
-    for (var y = 0; y < matrix.length; y++) {
-        for (var x = 0; x < matrix[y].length; x++) {
-
-            if (matrix[y][x] == 1) {
-                fill("green");
-                rect(x * side, y * side, side, side);
-            }
-            else if (matrix[y][x] == 0) {
-                fill("#acacac");
-                rect(x * side, y * side, side, side);
-            }
-            else if (matrix[y][x] == 2) {
-                fill("yellow");
-                rect(x * side, y * side, side, side);
-            }
-            else if (matrix[y][x] == 3) {
-                fill("red");
-                rect(x * side, y * side, side, side);
-            }
-            else if (matrix[y][x] == 4) {
-                fill("blue");
-                rect(x * side, y * side, side, side);
-            }
-            else if (matrix[y][x] == 5) {
-                fill("black");
-                rect(x * side, y * side, side, side);
-            }
-        }
-    }
     for (var i in grassArr) {
         grassArr[i].bazmanal();
 
