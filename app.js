@@ -14,7 +14,7 @@ app.get("/", function (req, res) {
     res.redirect("public");
 });
 
-app.listen(3000, function () {
+server.listen(3000, function () {
     console.log("Example is running on port 3000");
 });
 
@@ -22,6 +22,7 @@ var n = 40;
 var m = 40;
 var matrix = [];
 var side = 20;
+
 
 global.grasArr = [];
 global.MardArr = [];
@@ -79,11 +80,12 @@ io.on('connection', function (socket) {
     for (var i in matrix) {
         io.sockets.emit("draw", matrix[i]);
     }
-    socket.on("send message", function (data) {
+    socket.on("send martix", function (data) {
         matrix.push(data);
-        io.sockets.emit("display message", data);
+        io.sockets.emit("display matrix ", data);
     })
 });
+
 
 
 function draw() {
