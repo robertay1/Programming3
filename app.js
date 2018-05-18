@@ -24,12 +24,14 @@ var matrix = [];
 var side = 20;
 
 
+
 global.grasArr = [];
 global.MardArr = [];
 global.zombarr = [];
 global.Gaylarr = [];
 global.xotakerArr = [];
 
+ console.log(matrix);
 
 function setup() {
     for (var i = 0; i < n; i++) {
@@ -39,12 +41,11 @@ function setup() {
             matrix[i][j] = Math.round(Math.random() * 4.505);
         }
     }
-    // console.log(matrix);
-
+   
     frameRate(2);
-    createCanvas(matrix[0].length * side, matrix.length * side);
+    createCanvas(matrix.length * side, matrix.length * side);
     background('#acacac');
-
+    
 
     for (var y = 0; y < matrix.length; y++) {
         for (var x = 0; x < matrix[y].length; x++) {
@@ -78,12 +79,12 @@ function setup() {
 io.on('connection', function (socket) {
     socket.emit("setup", { size: matrix.length, side: global.side })
     for (var i in matrix) {
-        io.sockets.emit("draw", matrix[i]);
+        socket.emit("draw", matrix[i]);
     }
-    socket.on("send martix", function (data) {
-        matrix.push(data);
-        io.sockets.emit("display matrix ", data);
-    })
+    // socket.emit("draw", function (data) {
+    //     matrix.push(data);
+    //     io.sockets.emit("display matrix ", data);
+    // })
 });
 
 

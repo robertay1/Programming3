@@ -1,18 +1,18 @@
-
     var socket = io.connect('http://localhost:3000/');
 
-    mSize = 40;
-    side = 20;
+   msize = 0;
+    side = 0;
     socket.on('setup', function (data) {
         console.log(data);
         mSize = data.size;
         side = data.side;
-        frameRate(2);
-        background('grey');
-        creatCanvas(mSize * side, mSize * side);
+        
+         
     })
+   
     socket.on('draw', function (matrix) {
-
+       
+        // createCanvas(matrix.length * side, matrix.length * side);
         for (var y = 0; y < matrix.length; y++) {
             for (var x = 0; x < matrix[y].length; x++) {
 
