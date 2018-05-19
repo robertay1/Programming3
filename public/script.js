@@ -1,10 +1,10 @@
     var socket = io.connect('http://localhost:3000/');
 
-   msize = 0;
-    side = 0;
+   msize = 40;
+    side = 4;
     socket.on('setup', function (data) {
         console.log(data);
-        mSize = data.size;
+        msize = data.size;
         side = data.side;
         
          

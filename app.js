@@ -31,7 +31,7 @@ global.zombarr = [];
 global.Gaylarr = [];
 global.xotakerArr = [];
 
- console.log(matrix);
+ //console.log(matrix);
 
 function setup() {
     for (var i = 0; i < n; i++) {
@@ -42,7 +42,7 @@ function setup() {
         }
     }
    
-    frameRate(2);
+    frameRate(2000);
     createCanvas(matrix.length * side, matrix.length * side);
     background('#acacac');
     
@@ -76,15 +76,16 @@ function setup() {
     }
 
 }
+ console.log(matrix);
 io.on('connection', function (socket) {
     socket.emit("setup", { size: matrix.length, side: global.side })
     for (var i in matrix) {
         socket.emit("draw", matrix[i]);
     }
-    // socket.emit("draw", function (data) {
-    //     matrix.push(data);
-    //     io.sockets.emit("display matrix ", data);
-    // })
+    socket.emit("draw", function (data) {
+        matrix.push(data);
+        io.sockets.emit("display matrix ", data);
+    })
 });
 
 
