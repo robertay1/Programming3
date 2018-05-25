@@ -1,21 +1,20 @@
-    var socket = io.connect('http://localhost:3000/');
-
-   msize = 40;
-    side = 4;
-    socket.on('setup', function (data) {
-        console.log(data);
-        msize = data.size;
-        side = data.side;
-        
-         
-    })
-   
-    socket.on('draw', function (matrix) {
-       
-        // createCanvas(matrix.length * side, matrix.length * side);
+var socket = io.connect('http://localhost:3000/');
+socket.on('setup', function (data) {
+    size = data.size;
+    side = data.side;
+})
+matrix = []
+var size1 = 40;
+var side1 = 5;
+function setup(){
+    createCanvas(size1 * side1, size1 * side1);
+}
+function draw(){
+    if (matrix.length>0)
+    {
+        background("#acacac")
         for (var y = 0; y < matrix.length; y++) {
             for (var x = 0; x < matrix[y].length; x++) {
-
                 if (matrix[y][x] == 1) {
                     fill("green");
                     rect(x * side, y * side, side, side);
@@ -42,8 +41,12 @@
                 }
             }
         }
-
-    })
+    }
+}
+socket.on('draw', function (data) {
+    matrix = data;
+    console.log(data)
+})
 
 
 

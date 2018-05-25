@@ -21,19 +21,19 @@ server.listen(3000, function () {
 var n = 40;
 var m = 40;
 var matrix = [];
-var side = 20;
+var side = 5;
 
 
 
-global.grasArr = [];
+global.grassArr = [];
 global.MardArr = [];
 global.zombarr = [];
 global.Gaylarr = [];
 global.xotakerArr = [];
 
- //console.log(matrix);
+//console.log(matrix);
 
-function setup() {
+
     for (var i = 0; i < n; i++) {
         matrix[i] = [];
 
@@ -41,51 +41,49 @@ function setup() {
             matrix[i][j] = Math.round(Math.random() * 4.505);
         }
     }
-   
-    frameRate(2000);
-    createCanvas(matrix.length * side, matrix.length * side);
-    background('#acacac');
-    
+
+    // frameRate(2000);
+    // createCanvas(matrix[0].length * side, matrix.length * side);
+    // background('#acacac');
+
 
     for (var y = 0; y < matrix.length; y++) {
         for (var x = 0; x < matrix[y].length; x++) {
 
             if (matrix[y][x] == 1) {
-                grassArr.push(new Grass(x, y));
+                global.grassArr.push(new Grass(x, y));
             }
-            else if (matrix[y][x] == 2) {
+            else if (matrix[y][x] == 2||2.5) {
                 var r = (Math.round(Math.random())) / 2;
-                xotakerArr.push(new Xotaker(x, y, r));
+                global.xotakerArr.push(new Xotaker(x, y, r));
                 matrix[y][x] += r;
             }
-            else if (matrix[y][x] == 3) {
+            else if (matrix[y][x] == 3||3.5) {
                 var r = (Math.round(Math.random())) / 2;
-                Gaylarr.push(new Gayl(x, y));
+                global.Gaylarr.push(new Gayl(x, y));
                 matrix[y][x] += r;
             }
-            else if (matrix[y][x] == 4) {
+            else if (matrix[y][x] == 4||4.5) {
                 var r = (Math.round(Math.random())) / 2;
-                MardArr.push(new Mard(x, y));
+                global.MardArr.push(new Mard(x, y));
                 matrix[y][x] += r;
             }
             else if (matrix[y][x] == 5) {
-                zombarr.push(new zombi(x, y));
+                global.zombarr.push(new zombi(x, y));
             }
 
         }
     }
 
-}
- console.log(matrix);
 io.on('connection', function (socket) {
-    socket.emit("setup", { size: matrix.length, side: global.side })
-    for (var i in matrix) {
-        socket.emit("draw", matrix[i]);
-    }
-    socket.emit("draw", function (data) {
-        matrix.push(data);
-        io.sockets.emit("display matrix ", data);
-    })
+    socket.emit('setup', { size: matrix.length, side: side })
+    // for (var i in matrix) {
+    socket.emit('draw', matrix);
+    //}
+    // socket.emit('draw', function (data) {
+    //     matrix.push(data);
+    //     io.sockets.emit('display matrix', data);
+    // })
 });
 
 
@@ -121,4 +119,7 @@ function draw() {
         zombarr[i].utel();
     }
 
+
 }
+
+//setInterval(function(){console.log(matrix)},1000)
