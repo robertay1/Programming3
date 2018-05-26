@@ -20,8 +20,7 @@ server.listen(3000, function () {
 
 var n = 40;
 var m = 40;
-var matrix = [];
-var side = 5;
+var side = 15;
 
 
 
@@ -30,7 +29,7 @@ global.MardArr = [];
 global.zombarr = [];
 global.Gaylarr = [];
 global.xotakerArr = [];
-
+global.matrix = []; 
 //console.log(matrix);
 
 
@@ -41,7 +40,6 @@ global.xotakerArr = [];
             matrix[i][j] = Math.round(Math.random() * 4.505);
         }
     }
-
     // frameRate(2000);
     // createCanvas(matrix[0].length * side, matrix.length * side);
     // background('#acacac');
@@ -53,17 +51,17 @@ global.xotakerArr = [];
             if (matrix[y][x] == 1) {
                 global.grassArr.push(new Grass(x, y));
             }
-            else if (matrix[y][x] == 2||2.5) {
+            else if (matrix[y][x] == 2) {
                 var r = (Math.round(Math.random())) / 2;
                 global.xotakerArr.push(new Xotaker(x, y, r));
                 matrix[y][x] += r;
             }
-            else if (matrix[y][x] == 3||3.5) {
+            else if (matrix[y][x] == 3) {
                 var r = (Math.round(Math.random())) / 2;
                 global.Gaylarr.push(new Gayl(x, y));
                 matrix[y][x] += r;
             }
-            else if (matrix[y][x] == 4||4.5) {
+            else if (matrix[y][x] == 4) {
                 var r = (Math.round(Math.random())) / 2;
                 global.MardArr.push(new Mard(x, y));
                 matrix[y][x] += r;
@@ -88,7 +86,7 @@ io.on('connection', function (socket) {
 
 
 
-function draw() {
+setInterval(function draw() {
 
     for (var i in grassArr) {
         grassArr[i].bazmanal();
@@ -120,6 +118,6 @@ function draw() {
     }
 
 
-}
+},1000);
 
 //setInterval(function(){console.log(matrix)},1000)

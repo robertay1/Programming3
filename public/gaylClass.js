@@ -26,7 +26,9 @@ module.exports = class Gayl extends LivingCreature {
     sharjvel() {
 
         this.stanalNorKordinatner();
-        var nortex = random(this.yntrelVandak(0));
+        //var nortex = random(this.yntrelVandak(0));
+        var nortex = this.yntrelVandak(0)[Math.floor(Math.random()* this.yntrelVandak(0).lenght)];
+
 
         if (nortex) {
             matrix[this.y][this.x] = 0;
@@ -40,7 +42,9 @@ module.exports = class Gayl extends LivingCreature {
     utel() {
         this.stanalNorKordinatner();
 
-        var nortex = random(this.yntrelVandak(2));
+        //var nortex = random(this.yntrelVandak(2));
+        var nortex = this.yntrelVandak(2)[Math.floor(Math.random()* this.yntrelVandak(2).lenght)];
+        
 
         if (nortex) {
             matrix[this.y][this.x] = 0;

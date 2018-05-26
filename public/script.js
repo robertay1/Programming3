@@ -5,7 +5,7 @@ socket.on('setup', function (data) {
 })
 matrix = []
 var size1 = 40;
-var side1 = 5;
+var side1 = 15;
 function setup(){
     createCanvas(size1 * side1, size1 * side1);
 }
@@ -27,11 +27,23 @@ function draw(){
                     fill("yellow");
                     rect(x * side, y * side, side, side);
                 }
+                else if (matrix[y][x] == 2.5) {
+                    fill("yellow");
+                    rect(x * side, y * side, side, side);
+                }
                 else if (matrix[y][x] == 3) {
                     fill("red");
                     rect(x * side, y * side, side, side);
                 }
+                 else if (matrix[y][x] == 3.5) {
+                    fill("red");
+                    rect(x * side, y * side, side, side);
+                }
                 else if (matrix[y][x] == 4) {
+                    fill("blue");
+                    rect(x * side, y * side, side, side);
+                }
+                else if (matrix[y][x] == 4.5) {
                     fill("blue");
                     rect(x * side, y * side, side, side);
                 }

@@ -1,6 +1,6 @@
 var LivingCreature = require("./class.js")
 module.exports = class Xotaker extends LivingCreature {
-     constructor(x, y, ser) {
+    constructor(x, y, ser) {
         super(x, y, ser);
         this.ser = (ser == 0 ? "arakan" : "igakan");
 
@@ -8,7 +8,7 @@ module.exports = class Xotaker extends LivingCreature {
     }
 
     stanalNorKordinatner() {
-      this.directions = [
+        this.directions = [
             [this.x - 1, this.y - 1],
             [this.x, this.y - 1],
             [this.x + 1, this.y - 1],
@@ -24,7 +24,8 @@ module.exports = class Xotaker extends LivingCreature {
         return super.yntrelVandak(ch);
     }
     sharjvel() {
-        var nortex = random(this.yntrelVandak(0));
+        // var nortex = Math.random(this.yntrelVandak(0));
+        var nortex = this.yntrelVandak(0)[Math.floor(Math.random() * this.yntrelVandak(0).lenght)];
 
         if (nortex) {
             matrix[this.y][this.x] = 0;
@@ -35,7 +36,9 @@ module.exports = class Xotaker extends LivingCreature {
         }
     }
     utel() {
-        var nortex = random(this.yntrelVandak(1));
+        //var nortex = Math.random(this.yntrelVandak(1));
+        var nortex = this.yntrelVandak(1)[Math.floor(Math.random() * this.yntrelVandak(1).lenght)];
+
 
         if (nortex) {
             matrix[this.y][this.x] = 0;
@@ -54,31 +57,38 @@ module.exports = class Xotaker extends LivingCreature {
     }
 
     bazmanal() {
-       if (this.ser == "arakan"){
-        var norVandak = random(this.yntrelVandak(2.5));
-        
-         if (this.energy >= 15 && norVandak) {
-            var Vandak = random(this.yntrelVandak(0));
-            var norxotutox = new Xotaker(Vandak[0], Vandak[1]);
-            xotakerArr.push(norxotutox);
-            matrix[Vandak[1]][Vandak[0]] = 0;
+        if (this.ser == "arakan") {
+            // var norVandak = random(this.yntrelVandak(2.5));
+            var norVandak = this.yntrelVandak(2.5)[Math.floor(Math.random() * this.yntrelVandak(2.5).lenght)];
 
-            this.energy  = 6;
 
-}};
-         if (this.ser == "igakan"){
-        var norVandak = random(this.yntrelVandak(2));
-        
-         if (this.energy >= 15 && norVandak) {
-            var Vandak = random(this.yntrelVandak(0));
-            var norxotutox = new Xotaker(Vandak[0], Vandak[1]);
-            xotakerArr.push(norxotutox);
-            matrix[Vandak[1]][Vandak[0]] = 0;
+            if (this.energy >= 15 && norVandak) {
+               // var Vandak = random(this.yntrelVandak(0));
+                var Vandak = this.yntrelVandak(0)[Math.floor(Math.random() * this.yntrelVandak(0).lenght)];
 
-            this.energy  = 6;
-}
+                var norxotutox = new Xotaker(Vandak[0], Vandak[1]);
+                xotakerArr.push(norxotutox);
+                matrix[Vandak[1]][Vandak[0]] = 0;
 
-       
+                this.energy = 6;
+
+            }
+        };
+        if (this.ser == "igakan") {
+           // var norVandak = random(this.yntrelVandak(2));
+            var norVandak = this.yntrelVandak(2)[Math.floor(Math.random()* this.yntrelVandak(2).lenght)];
+
+
+            if (this.energy >= 15 && norVandak) {
+                var Vandak = random(this.yntrelVandak(0));
+                var norxotutox = new Xotaker(Vandak[0], Vandak[1]);
+                xotakerArr.push(norxotutox);
+                matrix[Vandak[1]][Vandak[0]] = 0;
+
+                this.energy = 6;
+            }
+
+
 
         }
 
