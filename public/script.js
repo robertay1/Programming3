@@ -1,163 +1,158 @@
-var socket = io.connect('http://localhost:3000/');
-socket.on('setup', function (data) {
-    size = data.size;
-    side = data.side;
-})
-matrix = []
-var size1 = 40;
-var side1 = 15;
-function setup(){
-    createCanvas(size1 * side1, size1 * side1);
+socket = io();
+var matrix = [];
+var n = 35;
+var m = 35;
+var side = 15;
+var grassArr = [], xotakerArr = [], gishatichArr = [], mardArr = [], mardakerArr = [];
+
+socket.on("send matrix", function (data) {
+    matrix = [];
+    for (i in data) {
+        matrix.push(data[i]);
+    }
+});
+
+socket.on("send grassArr", function (data) {
+    grassArr = data;
+});
+socket.on("send xotakerArr", function (data) {
+    xotakerArr = data;
+});
+socket.on("send gishatichArr", function (data) {
+    gishatichArr = data;
+});
+socket.on("send mardArr", function (data) {
+    mardArr = data;
+});
+socket.on("send mardakerArr", function (data) {
+    mardakerArr = data;
+});
+
+var exanak = "Գարուն";
+
+socket.on("send weather", function (data) {
+    exanak = data;
+    document.getElementById("exanak").innerHTML = "Exanak:" + exanak;
+});
+
+var matrix;
+
+function setup() {
+    createCanvas(side * n, side * m);
+    background("#acacac");
+    frameRate(5);
 }
-function draw(){
-    if (matrix.length>0)
-    {
-        background("#acacac")
-        for (var y = 0; y < matrix.length; y++) {
-            for (var x = 0; x < matrix[y].length; x++) {
-                if (matrix[y][x] == 1) {
+
+function draw() {
+    for (var y in matrix) {
+        for (var x in matrix[y]) {
+            if (matrix[y][x] == 0) {
+                fill("#acacac");
+            }
+            else if (matrix[y][x] == 1) {
+                if (exanak == "Գարուն") {
                     fill("green");
-                    rect(x * side, y * side, side, side);
                 }
-                else if (matrix[y][x] == 0) {
-                    fill("#acacac");
-                    rect(x * side, y * side, side, side);
+                else if (exanak == "Ամառ") {
+                    fill("#00bb00");
                 }
-                else if (matrix[y][x] == 2) {
-                    fill("yellow");
-                    rect(x * side, y * side, side, side);
+                else if (exanak == "Աշուն") {
+                    fill("#799602");
                 }
-                else if (matrix[y][x] == 2.5) {
-                    fill("yellow");
-                    rect(x * side, y * side, side, side);
-                }
-                else if (matrix[y][x] == 3) {
-                    fill("red");
-                    rect(x * side, y * side, side, side);
-                }
-                 else if (matrix[y][x] == 3.5) {
-                    fill("red");
-                    rect(x * side, y * side, side, side);
-                }
-                else if (matrix[y][x] == 4) {
-                    fill("blue");
-                    rect(x * side, y * side, side, side);
-                }
-                else if (matrix[y][x] == 4.5) {
-                    fill("blue");
-                    rect(x * side, y * side, side, side);
-                }
-                else if (matrix[y][x] == 5) {
-                    fill("black");
-                    rect(x * side, y * side, side, side);
+                else if (exanak == "Ձմեռ") {
+                    fill("#CEE56E");
                 }
             }
+            else if (matrix[y][x] == 2) {
+                fill("yellow");
+            }
+            else if (matrix[y][x] == 3) {
+                fill("red");
+            }
+            else if (matrix[y][x] == 4) {
+                fill("blue");
+            }
+            else if (matrix[y][x] == 5) {
+                fill("black");
+            }
+            rect(x * side, y * side, side, side);
         }
     }
+
+    if (grassArr.length == 900 || (grassArr.length == 0 && xotakerArr.length == 0 && gishatichArr.length == 0 && mardArr.length == 0 && mardakerArr.length == 0)) {
+        background("#acacac");
+        textSize(60);
+        fill(0);
+        textAlign(CENTER);
+        text("GAME OVER", 360, 370);
+    }
 }
-socket.on('draw', function (data) {
-    matrix = data;
-    console.log(data)
-})
+
+function paytyun(evt) { //click aneluc heto petq e nshvac vandaki ev koxqi 8 vandakneri bolor kerparnery veranan 
+    if (evt.pageX <= side * n && evt.pageY <= side * m) {
+        coordX = Math.floor(evt.pageX / side);
+        coordY = Math.floor(evt.pageY / side);
+        directions = [
+            [coordX, coordY],
+            [coordX - 1, coordY - 1],
+            [coordX, coordY - 1],
+            [coordX + 1, coordY - 1],
+            [coordX - 1, coordY],
+            [coordX - 1, coordY + 1],
+            [coordX, coordY + 1],
+            [coordX + 1, coordY + 1],
+            [coordX + 1, coordY]
+        ]
+
+        for (k in directions) {
+
+            if (directions[k][0] >= 0 && directions[k][0] < matrix[0].length && directions[k][1] >= 0 && directions[k][1] < matrix.length) {
+                if (matrix[directions[k][0]][directions[k][1]] == 1) {
+                    for (var coordX in grassArr) {
+                        if (grassArr[coordX].x == directions[k][0] && grassArr[coordX].y == directions[k][1]) {
+                            grassArr.splice(coordX, 1);
+                        }
+                    }
+                    socket.emit("new grassArr", grassArr);
+                }
+                else if (matrix[directions[k][0]][directions[k][1]] == 2 || matrix[directions[k][0]][directions[k][1]] == 2.5) {
+                    for (var coordX in xotakerArr) {
+                        if (xotakerArr[coordX].x == directions[k][0] && xotakerArr[coordX].y == directions[k][1]) {
+                            xotakerArr.splice(coordX, 1);
+                        }
+                    }
+                    socket.emit("new xotakerArr", xotakerArr);
+                }
+                else if (matrix[directions[k][0]][directions[k][1]] == 3 || matrix[directions[k][0]][directions[k][1]] == 3.5) {
+                    for (var coordX in gishatichArr) {
+                        if (gishatichArr[coordX].x == directions[k][0] && gishatichArr[coordX].y == directions[k][1]) {
+                            gishatichArr.splice(coordX, 1);
+                        }
+                    }
+                    socket.emit("new gishatichArr", gishatichArr);
+                }
+                else if (matrix[directions[k][0]][directions[k][1]] == 4 || matrix[directions[k][0]][directions[k][1]] == 4.5) {
+                    for (var coordX in mardArr) {
+                        if (mardArr[coordX].x == directions[k][0] && mardArr[coordX].y == directions[k][1]) {
+                            mardArr.splice(coordX, 1);
+                        }
+                    }
+                    socket.emit("new mardArr", mardArr);
+                }
+                else if (matrix[directions[k][0]][directions[k][1]] == 5) {
+                    for (var coordX in mardakerArr) {
+                        if (mardakerArr[coordX].x == directions[k][0] && mardakerArr[coordX].y == directions[k][1]) {
+                            mardakerArr.splice(coordX, 1);
+                        }
+                    }
+                    socket.emit("new mardakerArr", mardakerArr);
+                }
+                matrix[directions[k][1]][directions[k][0]] = 0;
+            }
+        }
+        socket.emit("new matrix", matrix);
+    }
+}
+window.onclick = paytyun;
 
 
-
-// var grassArr = [];
-// var xotakerArr = [];
-// var Gaylarr = [];
-// var MardArr = [];
-// var zombarr = [];
-
-
-
-
-
-
-
-
-
-
-
-// console.log(matrix);
-
-
-
-
-
-
-
-
-
-
-
-// function setup(){
-
-// for (var i = 0; i < n; i++) {
-//     matrix[i]=[];
-
-//     for(var j =0;j< m;j++){
-//         matrix[i][j] = Math.round(Math.random());
-//     }
-// }
-
-
-
-// }
-// console.log(matrix);
-//-------------------------------------------------------
-
-
-// var side = 70;
-
-// var matrix = [
-//     [1, 0, 0, 0, 0, 0, 0, 0],
-//     [0, 1, 0, 0, 0, 0, 0, 0],
-//     [0, 0, 1, 0, 0, 0, 0, 0],
-//     [0, 0, 0, 1, 0, 0, 0, 0],
-//     [0, 0, 0, 0, 1, 0, 0, 0],
-//     [0, 0, 0, 0, 0, 1, 0, 0],
-//     [0, 0, 0, 0, 0, 0, 1, 0],
-//     [0, 0, 0, 0, 0, 0, 0, 1],
-
-// ]
-
-
-// function setup() {
-//     createCanvas(800, 800);
-//     background('#acacac');
-// };
-// function draw() {
-//     for (var y = 0; y < 10; y++) {
-//         for (var x = 0; x < 10; x++) {
-//             if (x == 0 || y == 0 ) {
-//                strokeWeight(4);
-
-//             }
-//             else
-//             {
-//                 strokeWeight(1)
-//             }
-//               fill("white");
-
-//                 rect(x * side, y * side, side, side);
-//                 textSize(32);
-//                 fill("black");
-//                 text(x, y, x,[y],[x]);
-
-
-
-//         }
-
-//     }
-// }
-//----------------------------------------
-
-// var matrix = [
-//     [0, 0, 1, 0, 0],
-//     [1, 0, 0, 0, 0],
-//     [0, 1, 0, 0, 0],
-//     [0, 0, 1, 0, 0],
-//     [1, 1, 0, 0, 0],
-//     [1, 1, 2, 0, 0],
-//     [1, 1, 0, 0, 0]
-// ];
