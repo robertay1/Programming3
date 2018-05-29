@@ -155,4 +155,4 @@ function paytyun(evt) { //click aneluc heto petq e nshvac vandaki ev koxqi 8 van
 }
 window.onclick = paytyun;
 
-
+//voncor exav, shat em uzum ancnem
